@@ -332,6 +332,46 @@
             font-size: 1.5rem;
         }
         
+        /* Dog image container */
+        .surprise-image-container {
+            max-width: 90%;
+            width: 500px;
+            margin: 30px auto;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transform: scale(0);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.18, 1.25, 0.4, 1), opacity 0.8s ease;
+        }
+        
+        .surprise-image-container.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .surprise-image-container img {
+            width: 100%;
+            display: block;
+        }
+        
+        .surprise-message {
+            margin-top: 20px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .surprise-message.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         /* Media queries - responsive design */
         @media (max-width: 768px) {
             h1 {
@@ -349,6 +389,10 @@
             .age-number {
                 font-size: 6rem;
             }
+            
+            .surprise-image-container {
+                width: 85%;
+            }
         }
         
         /* Fix for Android WebView */
@@ -361,6 +405,10 @@
             .photo-container {
                 width: 250px;
                 height: 250px;
+            }
+            
+            .surprise-image-container {
+                width: 80%;
             }
         }
     </style>
@@ -434,13 +482,21 @@
         <p>许个愿吧，未来的路上星光璀璨!</p>
         <p>May all your dreams and wishes come true!</p>
         <div id="birthday-message" style="margin-top: 20px; font-size: 1.8rem; font-weight: bold;"></div>
+        
+        <!-- Added surprise dog image container (initially hidden) -->
+        <div class="surprise-image-container" id="surprise-image">
+            <img src="path/to/dog-image.jpg" alt="Birthday Surprise" />
+        </div>
+        <div class="surprise-message" id="surprise-message">
+            祝你生日快乐，未来一切顺利！
+        </div>
     </section>
 
     <script>
         // Enhanced but still optimized JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             // Preload images
-            const images = ['images/WechatIMG1231.jpg', 'images/WechatIMG1249.jpg', 'images/WechatIMG1231.jpg'];
+            const images = ['images/WechatIMG1231.jpg', 'images/WechatIMG1249.jpg', 'images/WechatIMG1231.jpg', 'path/to/dog-image.jpg'];
             images.forEach(function(src) {
                 const img = new Image();
                 img.src = src;
@@ -504,11 +560,13 @@
                 }
             }
             
-            // Enhanced candle blowing effect
+            // Enhanced candle blowing effect with surprise image
             const blowButton = document.getElementById('blow-button');
             const flame = document.getElementById('flame');
             const smoke = document.getElementById('smoke');
             const birthdayMessage = document.getElementById('birthday-message');
+            const surpriseImage = document.getElementById('surprise-image');
+            const surpriseMessage = document.getElementById('surprise-message');
             
             blowButton.addEventListener('click', function() {
                 // Blow out candle with animation
@@ -524,6 +582,16 @@
                     birthdayMessage.textContent = "Happy 22nd Birthday, Chris!";
                     birthdayMessage.style.textShadow = "0 0 10px rgba(255, 131, 71, 0.7)";
                 }, 1000);
+                
+                // Show surprise image after a slight delay
+                setTimeout(function() {
+                    surpriseImage.classList.add('active');
+                    
+                    // Show surprise message shortly after image appears
+                    setTimeout(function() {
+                        surpriseMessage.classList.add('active');
+                    }, 500);
+                }, 2000);
                 
                 // Hide button
                 blowButton.style.display = 'none';
